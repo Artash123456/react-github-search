@@ -8,7 +8,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false)
   return (
         <Wrapper>
-          <div className="burger">
+          {/* <div className="burger">
             <div className="hamburger" onClick={() =>setOpen(!open)}>
               <GiHamburgerMenu/>
             </div>
@@ -23,7 +23,7 @@ const Navbar = () => {
                   <li key = {elem}><a target = "_blank" href = {value}>{elem}</a> <h6 onClick={()=>removeFromFavorites(elem)}>X</h6></li>)})} 
               </ul>
             </nav>
-          </div>
+          </div> */}
         </Wrapper>
   );
 };

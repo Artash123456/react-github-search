@@ -78,22 +78,21 @@ const searchRepository = async(rep) => {
     setLoading(false);
 }
 // doesn`t work well --------------------------------------
-const addToFavorites =(elem)=>{
-    localStorage.setItem(elem.name, elem.clone_url);
-    setCount(localKeys.length)
-    window.location.reload()
-};
-const removeFromFavorites = (elem,i) =>{
-    localStorage.removeItem(elem)
-    setCount(localKeys.length)
-    window.location.reload()
-}
+// const addToFavorites =(elem)=>{
+//     localStorage.setItem(elem.name, elem.clone_url);
+//     setCount(localKeys.length)
+//     window.location.reload()
+// };
+// const removeFromFavorites = (elem,i) =>{
+//     localStorage.removeItem(elem)
+//     setCount(localKeys.length)
+//     window.location.reload()
+// }
 
 useEffect(checkRequests, [])
     
     return <GithubContext.Provider
     value = {{
-        addToFavorites,
         searchGithubUser, 
         searchRepository,
         repository,
@@ -103,9 +102,10 @@ useEffect(checkRequests, [])
         repos, 
         followers,
         loading,
-        count,
-        localKeys,
-        removeFromFavorites
+        // count,
+        // addToFavorites,
+        // localKeys,
+        // removeFromFavorites
     }}>{children}</GithubContext.Provider>
 }
 export {GithubProvider, GithubContext}

@@ -47,6 +47,7 @@ const Wrapper = styled.div`
   position: relative;
   display: grid;
   gap: 1rem 1.75rem;
+  margin-bottom:1rem;
   @media (min-width: 768px) {
     grid-template-columns: 1fr max-content;
     align-items: center;
