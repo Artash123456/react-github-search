@@ -21,7 +21,7 @@ const Repository = () => {
               <div>
                 <h4 onClick={()=>addToFavorites(elem)}><abbr title = "Click to add to favorites...))">{elem.name}</abbr></h4>
                 <h4>{elem.owner.login}</h4>
-                <h4><a target="_blank" rel = "" href = {elem.forks_url}>Click to go</a></h4>
+                <h4><a target="_blank" rel="noopener noreferrer" href = {elem.forks_url}>Click to go</a></h4>
                 <h4>{elem.forks_count}</h4>
                 <h4>{elem.stargazers_count}</h4>               
               </div>

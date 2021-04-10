@@ -3,7 +3,7 @@ import mockUser from './mockData/mockUser';
 import mockRepos from './mockData/mockRepos';
 import mockFollowers from "./mockData/mockFollowers";
 import axios from 'axios';
-
+import DB from "./firebase";
 
 const rootUrl = 'https://api.github.com';
 const GithubContext = React.createContext();
@@ -16,8 +16,8 @@ const GithubProvider = ({children}) => {
     const [requests, setRequests] = useState(0);
     const [loading, setLoading] = useState(false);
     const [error, seterror] = useState({show:false, msg:""})
-    const [localKeys, setLocalKeys] = useState(Object.keys(localStorage))
-    const [count, setCount] = useState(localKeys.length)
+    const [count, setCount] = useState(0)
+    const [favorites, setFavorites] = useState([])
     // checking requests count 
 const checkRequests = () => {
     axios(`${rootUrl}/rate_limit`)
@@ -77,19 +77,29 @@ const searchRepository = async(rep) => {
     checkRequests();
     setLoading(false);
 }
-// doesn`t work well --------------------------------------
-// const addToFavorites =(elem)=>{
-//     localStorage.setItem(elem.name, elem.clone_url);
-//     setCount(localKeys.length)
-//     window.location.reload()
-// };
-// const removeFromFavorites = (elem,i) =>{
-//     localStorage.removeItem(elem)
-//     setCount(localKeys.length)
-//     window.location.reload()
-// }
+//------add to firebase-------------
+const addToFavorites =(elem)=>{
+     DB.database().ref(`favorites/${elem.name}`).set(elem.clone_url)
+};
+//-----remove from firebase ------------
+const removeFromFavorites = (elem) =>{
+    DB.database().ref(`favorites/${elem}`).remove()
 
+}
+useEffect(() => {
+    DB.database().ref("favorites").on("value",(users)=>{
+        let favor =[];
+        users.forEach(e=>{
+          console.log(e.key);
+          let onlyfav = {[e.key]: e.val()}
+          favor.push(onlyfav)
+        })
+        setFavorites(favor)
+        setCount(favor.length)
+    })
+}, [])
 useEffect(checkRequests, [])
+console.log(favorites);
     
     return <GithubContext.Provider
     value = {{
@@ -102,10 +112,10 @@ useEffect(checkRequests, [])
         repos, 
         followers,
         loading,
-        // count,
-        // addToFavorites,
-        // localKeys,
-        // removeFromFavorites
+        count,
+        addToFavorites,
+        removeFromFavorites,
+        favorites
     }}>{children}</GithubContext.Provider>
 }
 export {GithubProvider, GithubContext}

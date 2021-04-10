@@ -4,11 +4,11 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { GithubContext } from '../context/context';
 
 const Navbar = () => {
-  const {count, removeFromFavorites, localKeys} = useContext(GithubContext)
+  const {count, removeFromFavorites, favorites} = useContext(GithubContext)
   const [open, setOpen] = useState(false)
   return (
         <Wrapper>
-          {/* <div className="burger">
+          <div className="burger">
             <div className="hamburger" onClick={() =>setOpen(!open)}>
               <GiHamburgerMenu/>
             </div>
@@ -17,13 +17,14 @@ const Navbar = () => {
                   <li onClick={()=>window.scrollTo(0,0)}>Search by Users</li>
                   <li onClick={()=>window.scrollTo(1100,1100)}>Search by Repos</li>
                   <li onClick={()=>window.scrollTo(1200,1200)}>Favorites<span>{count}</span></li> 
-                  {localKeys.map(elem=> {
-                  const value = localStorage.getItem(elem)
+                  {favorites.map(elem=> {
+                    const keys = Object.keys(elem)
+                    const values = Object.values(elem)
                     return (
-                  <li key = {elem}><a target = "_blank" href = {value}>{elem}</a> <h6 onClick={()=>removeFromFavorites(elem)}>X</h6></li>)})} 
+                  <li key = {keys}><a target = "_blank" rel="noopener noreferrer" href = {values}>{keys}</a> <h6 onClick={()=>removeFromFavorites(keys)}>X</h6></li>)})} 
               </ul>
             </nav>
-          </div> */}
+          </div>
         </Wrapper>
   );
 };
@@ -91,6 +92,8 @@ height:50px;
   }
   a{
     float:left;
+    color:white;
+    text-decoration:none;
   }
   h6{
     float:left;
